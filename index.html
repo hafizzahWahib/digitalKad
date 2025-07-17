@@ -12,7 +12,7 @@
 </head>
 
 <audio id="weddingSound" type="audio/mp3" src="./music/page.mp3" preload="auto"></audio>
-    
+
 <!-- Let the weddingSound to be play after user click the "buka" button. -->
 <script>
 function toggleOverlay() {
@@ -26,19 +26,10 @@ function toggleOverlay() {
     overlay.style.display = 'none';
     audio.pause();
     audio.currentTime = 0; // Reset
-
-  const mainContent = document.getElementById('mainContent');
-
-  // Only trigger on first click
-  if (overlay.style.display !== 'none') {
-    audio.play();
-
-    // Fade out overlay (optional)
-    overlay.style.opacity = '0';
-
   }
 }
 </script>
+
 <body>
     <div class="wrapper">
         <div id="overlay" class="overlay">
@@ -51,7 +42,6 @@ function toggleOverlay() {
             </div>
         </div>
     </div>
-    <div id="mainContent">
     <div class="card">
         <div class="petal-container"></div>
         <!-- Intro Section -->
@@ -73,7 +63,7 @@ function toggleOverlay() {
         <!-- Event Info Section -->
         <section class="info">
             <img src="./images/assalamualaikum-3.png" alt="" class="assalamualaikum reveal fade-bottom">
-            <div class="event-info reveal fade-bottom">
+            <div class="event-info reveal fade-bottom" style="margin-bottom: 50px;">
                 <div class="one">
                     <p>Dengan penuh kesyukuran</p>
                     <p>kami</p>
@@ -112,13 +102,15 @@ function toggleOverlay() {
                     <p>12:00 PM - 4:00 PM</p>
                 </div>
             </div>
-            <!-- Aturcara & Countdown Section -->
+
+            <!-- Countdown Section -->
             <div class="countdown reveal fade-bottom">
                 <!-- Countdown Timer -->
                 <div class="hero connect-page">
                     <div class="container">
                         <div class="hero-body">
                             <div class="campaign campaign-0">
+                                <h2>===============================</h2>
                                 <div class="counter timer">
                                     <span class="title">Menghitung hari</span>
                                     <div class="counter-boxes">
@@ -147,6 +139,7 @@ function toggleOverlay() {
             </div>
             <!-- Aturcara -->
             <div class="aturcara reveal fade-bottom">
+                <h2>===============================</h2>
                 <p class="title">aturcara majlis</p>
                 <div class="one">
                     <p>Kehadiran Tetamu</p>
@@ -164,10 +157,11 @@ function toggleOverlay() {
                     <p>Majlis Bersurai</p>
                     <p>4:00 Petang</p>
                 </div>
+                <h2>===============================</h2>
             </div>
-            <div class="ucapan reveal fade-bottom">
+            <div class="ucapan reveal fade-bottom" style="margin-bottom: 50px;">
                 <div class="container">
-                    <img src="./images/floral-4.png" alt="">
+                    <img src="./images/ucapan-bg.png" alt="">
                     <div class="content">
                         <b><p>Doa untuk Pengantin</p></b>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -181,29 +175,15 @@ function toggleOverlay() {
                     </div>
                 </div>
             </div>
-            <div class="ucapan reveal fade-bottom">
-                <div class="container">
-                    <img src="./images/qr.jpg" alt="">
-                    <div class="content">
-                        <p>Ya Allah, berkatilah majlis perkahwinan ini, limpahkan baraqah dan rahmat kepada Muhammad
-                            Hilmi dan Nur Hafizzah,Kurniakanlah mereka zuriat yang soleh dan solehah. Kekalkanlah jodoh mereka di dunia dan di akhirat dan
-                            sempurnakanlah agama mereka dengan berkat ikatan ini.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="qr reveal fade-bottom">
-                <div class="container">
-                    <div class="aturcara reveal fade-bottom">
-                    <p class="title">aturcara majlis</p>
-                    </div>
-                    <img src="./images/qr.jpg" alt="">
-                    </div>
-            </div>
-             <div class="ucapan reveal fade-bottom">
+            <div class="ucapan reveal fade-bottom" style="display: none;">
                 <div class="beri-ucapan-button reveal fade-bottom">
                     <button id="kehadiran-btn">
+                        <i class='bx bxs-check-square'></i>
+                        <span>Sahkan Kehadiran</span>
                     </button>
                     <button id="ucapan-btn">
+                        <i class='bx bxs-pen'></i>
+                        <span>Berikan Ucapan</span>
                     </button>
                 </div>
             </div>
@@ -218,7 +198,6 @@ function toggleOverlay() {
             </ul>
         </section>
     </div>
-</div>
 
     <!-- Bottom Modal -->
     <div id="calendar-menu" class="toggle-menu">
@@ -262,16 +241,13 @@ function toggleOverlay() {
 
     <div id="music-menu" class="toggle-menu">
         <div class="music">
-            <h1>Lagu</h1>
-            <p>Barbie and 12 Dancing Princess</p>
             <h1>Salam Kaut</h1>
             <img src="./images/qr2.jpg" alt="">
-            <audio id="audio-player" controls autoplay loop>
-                <source type="audio/mp3"
-                    src="./music/Barbie2.mp3">
+            <audio id="audio-player" autoplay loop>
+                <source src="./music/Barbie2.mp3" type="audio/mp3">
             </audio>
-            </div>
         </div>
+    </div>
 
     <div id="rsvp-menu" class="toggle-menu">
         <div class="rsvp">
@@ -376,7 +352,30 @@ function toggleOverlay() {
     </div>
 
     <div id="ucapan-menu" class="toggle-menu">
+        <div class="ucapan-tetamu">
+            <h1>Sampaikan Ucapan</h1>
+            <form id="form-ucapan" class="form-ucapan" action="insert_message.php" method="POST">
+                <label for="name">Nama Anda</label>
+                <input type="text" name="name" placeholder="Uzumaki Naruto" required>
+
+                <label for="ucapan">Ucapan</label>
+                <textarea name="message" id="ucapan" cols="30" rows="10" placeholder="Selemat pengantin baru..."
+                    required></textarea>
+
+                <div class="button">
+                    <button type="submit" class="hantar" id="hantar">
+                        <i class='bx bxs-paper-plane'></i>
+                        <span>Hantar</span>
+                    </button>
+                    <button class="tutup">
+                        <i class='bx bx-x'></i>
+                        <span>Tutup</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+    <!-- This container will hold the success message and will be dynamically populated -->
     <div id="success-menu" class="toggle-menu"></div>
 
 
