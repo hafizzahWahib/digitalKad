@@ -56,8 +56,7 @@ function setupCountdown(campaignSelector, startTimeMillis, endTimeMillis) {
 
     function countdown() {
         var gap = calculateRemaining();
-        var shouldRefresh = previousGap > day && gap <= day || previousGap > 0 && gap === 0;
-
+        var shouldRefresh = (previousGap > day && gap <= day) || (previousGap > 0 && gap === 0);
         previousGap = gap;
 
         var textDay = Math.floor(gap / day);
@@ -84,28 +83,33 @@ function setupCountdown(campaignSelector, startTimeMillis, endTimeMillis) {
     setInterval(countdown, 1000);
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    if (!document.querySelectorAll || !document.body.classList) {
-        return;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    const now = new Date().getTime(); // Current time
+    const end = new Date("2025-11-29T00:00:00+08:00").getTime(); // 29 Nov 2025, 12AM MYT
 
+    setupCountdown(".campaign-0", now, end);
 });
-
-setupCountdown(".campaign-0", new Date().getMilliseconds(), 1924920000000);
-
-
 
 
 
 /** =====================================================
  *  Add to Calendar
   ======================================================= */
+const now = new Date();
+
+// Format current date to UTC format: YYYYMMDDTHHmmssZ
+const pad = (num) => num.toString().padStart(2, '0');
+const startDate = `${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
+
+// Set a fixed end date: 29 November 2025 at 9:00 AM UTC
+const endDate = "20251129T090000Z";
+
 const event = {
-    title: "Jemputan Kenduri Kahwin John & Sarah",
-    startDate: "99991231T033000Z", // YYYYMMDDTHHmmssZ (UTC)
-    endDate: "99991231T090000Z",
-    location: "10A Jalan Seri Ampang 2, Kampung Pisang, 47300 Subang, Selangor, Malaysia",
-    description: "Kami menjemput tuan/puan hadir ke majlis perkahwinan anakanda kami.",
+    title: "Jemputan Kenduri Kahwin Hilmi & Hafizzah / Wedding of Hilmi & Hafizzah",
+    startDate: startDate,
+    endDate: endDate,
+    location: "Kimstone Garden Hall, Kuantan, Pahang.",
+    description: "Majlis perkahwinan Muhammad Hilmi dan Nur Hafizzah. Wedding day of Muhammad Hilmi and Nur Hafizzah.",
 };
 
 // Function to generate Google Calendar URL
@@ -180,12 +184,11 @@ function openGoogleMaps() {
 }
 
 function openWaze() {
-    const latitude = 3.8506857918206783;  // Example latitude
-    const longitude = 103.3622905537989;  // Example longitude
-    //const wazeUrl = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
-    const wazeUrl = `waze://?ll=${latitude},${longitude}&navigate=yes`
+    const latitude = 3.850885;
+    const longitude = 103.362293;
+    const wazeUrl = `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`;
 
-    window.open(wazeUrl, "_blank");  // Open in a new tab
+    window.open(wazeUrl, "_blank");
 }
 
 
@@ -196,7 +199,7 @@ function openWaze() {
     Contact
   ======================================================= */
 function openWhatsApp(phoneNumber) {
-    const message = "https://kad-jemputan-kahwin.vercel.app/\n\nHello, maaf menggangu. Saya ingin bertanyakan sesuatu berkenaan majlis perkahwinan ini.";
+    const message = "Hello dan Salam Sejahtera, saya nak tanya berkenaan majlis.";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");  // Opens WhatsApp in a new tab
 }
