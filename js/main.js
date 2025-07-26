@@ -200,8 +200,19 @@ function openWaze() {
   ======================================================= */
 function openWhatsApp(phoneNumber) {
     const message = "Hello dan Salam Sejahtera, saya nak tanya berkenaan majlis.";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");  // Opens WhatsApp in a new tab
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    // Detect iOS (iPhone or iPad)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+        // iOS prefers direct redirect
+        window.location.href = whatsappUrl;
+    } else {
+        // Other devices can use a new tab
+        window.open(whatsappUrl, "_blank");
+    }
 }
 
 function makePhoneCall(phoneNumber) {
